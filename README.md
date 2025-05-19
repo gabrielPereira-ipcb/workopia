@@ -1,61 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Workopia - Gerenciador de Tarefas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é um sistema de gestão de tarefas desenvolvido em Laravel Herd v11, com interface baseada no Bootstrap 5. O objetivo é permitir o registo, acompanhamento e organização de tarefas de forma simples e eficiente.
 
-## About Laravel
+## Funcionalidades da Aplicação
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Registo de Tarefas:** Permite criar novas tarefas informando título, descrição e data de fim.
+- **Listagem de Tarefas:** Exibe todas as tarefas cadastradas.
+- **Edição de Tarefas:** Atualiza a tarefa como "completada".
+- **Exclusão de Tarefas:** Permite remover tarefas do sistema.
+- **Validação de Dados:** Garante que os dados inseridos nos formulários sejam válidos (ex: título obrigatório, data válida).
+- **Interface Amigável:** Utiliza Bootstrap 5 para uma experiência visual moderna e responsiva.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Funcionalidade CRUD
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O sistema implementa todas as operações CRUD (Criar, Ler, Excluir) para o gerenciamento de tarefas.
 
-## Learning Laravel
+## Pré-requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **XAMPP** instalado para ambiente local (Apache, MySQL, PHP).
+-**GitHub**: https://github.com/gabrielPereira-ipcb/workopia.
+- **Bootstrap 5** para o frontend.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Etapas de Instalação e Configuração
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Etapa 1: Instalação do Laravel e Criação da Aplicação
 
-## Laravel Sponsors
+- Instale o [Laravel Herd v11](https://herd.laravel.com/).
+- Crie um novo projeto Laravel.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Etapa 2: Criação da Base de Dados
 
-### Premium Partners
+- Crie uma base de dados (exemplo: `database\database.sqlite`) sqlite3 no terminal.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+### Etapa 3: Criação das Tabelas
 
-## Contributing
+- A tabela de tarefas deve conter os seguintes campos:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **ID:** Identificador único da tarefa.
+- **Título:** Nome ou título da tarefa.
+- **Descrição:** Detalhes ou informações adicionais sobre a tarefa.
+- **Data de Fim:** Prazo para conclusão da tarefa.
+- **Status:** Situação atual da tarefa.
+- **Datas de Criação e Atualização:** Registros automáticos de quando a tarefa foi criada e modificada.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Etapa 4: Criação dos Controladores
 
-## Security Vulnerabilities
+- Crie controladores para gerenciar as operações das tarefas:
+/**
+ * listTask()
+ * Recupera as tarefas com status nulo (não concluídas) do banco de dados, paginando os resultados em lotes de 5,
+ * e retorna a view 'welcome' com as tarefas para exibição.
+ *
+ * addTask()
+ * Retorna a view 'tasks.add' para exibir o formulário de criação de uma nova tarefa.
+ *
+ * addTaskPost(Request $request)
+ * Valida os dados recebidos do formulário de criação de tarefa (título, descrição e prazo são obrigatórios),
+ * cria uma nova tarefa e salva no banco de dados. Redireciona para a página inicial com mensagem de sucesso
+ * ou retorna ao formulário com mensagem de erro em caso de falha.
+ *
+ * updateTaskStatus($id)
+ * Atualiza o status da tarefa identificada pelo ID para 'completed' (concluída).
+ * Redireciona para a página inicial com mensagem de sucesso ou erro conforme o resultado da operação.
+ *
+ * deleteTask($id)
+ * Remove a tarefa identificada pelo ID do banco de dados.
+ * Redireciona para a página inicial com mensagem de sucesso ou erro conforme o resultado da operação.
+ */
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Etapa 5: Configuração do Template
 
-## License
+- Importe e configure o Bootstrap 5 no projeto para estilização.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Etapa 6: Definição das Rotas
+
+- Configure as rotas no arquivo `web.php` para as operações de tarefas.
+
+### Etapa 7: Implementação e Testes
+
+- Implemente as funcionalidades e teste o aplicativo CRUD.
+
+---
